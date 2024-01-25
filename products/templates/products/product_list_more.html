@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <main>
+        <div id="main-cards">
+            {% for cat in category %}
+                <section>
+                    <div class="div-name-section">
+                        <h3>{{cat}}</h3>
+                    </div>
+                    <ul class="infinite-container">
+                        {% for product in product_list_more %}
+                            {% if product.PRDIs_Active %}
+                                <li class="infinite-item">
+                                    <div class="div-card">
+                                        {% if product.PRDIImage %}
+                                            <img src="{{ product.PRDIImage.url }}" alt="...">
+                                        {% else %}
+                                            <img style="height: 113px;" src="{% static 'img/not_found_image.jpg' %}" alt="...">
+                                        {% endif %}
+                                        <div class="div-card-body">
+                                            <h5>{{product.PRDname|slice:":25"}}</h5>
+                                            <span>
+                                                <div class="stars-img">
+                                                    <img src="{% static 'assets/icon/stars2.png' %}" alt="stars">
+                                                    <img src="{% static 'assets/icon/stars2.png' %}" alt="stars">
+                                                    <img src="{% static 'assets/icon/stars2.png' %}" alt="stars">
+                                                    <img src="{% static 'assets/icon/stars2.png' %}" alt="stars">
+                                                    <img src="{% static 'assets/icon/stars1.png' %}" alt="stars">
+                                                </div>
+                                                {% if product.PRDPriceDiscount > 0  %}
+                                                    <p class="salary" class="mr-1">
+                                                        <del>{{product.PRDPrice}} $</del>
+                                                    </p>
+                                                    <p class="salary">{{product.PRDCost}}$</p>
+                                                {% else %}
+                                                    <p class="salary">{{product.PRDPrice}}$</p>
+                                                {% endif %}
+                                                
+                                            </span>
+                                            <a class="buy-but" href="{% url 'products:product_detail' product.slug %}">اضاف الى العربه</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% else %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <a class="infinite-more-link" href="?page={{page_obj.next_page_number}}"></a>
+                        {% endif %}
+                    </ul>
+                </section>
+            {% endfor %}
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" 
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+    <script>
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0]
+            })
+    </script>
+{% endblock body %}

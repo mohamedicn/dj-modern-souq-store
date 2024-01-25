@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+  <main class="main-signin">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% elif message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+      {% csrf_token %}
+      <div id="div-img"><img src="{% static 'assets/icon/person-fill.svg' %}" alt=""></div>
+      <h2>تسجيل الدخول</h2>
+      <input type="email" name="email" placeholder="البريد الالكتروني" required>
+      <input type="password" name="password" placeholder="كلمه المرور" required>
+      <button type="submit" style="background-color:yellow;border: none;">تسجيل الدخول</button>
+      <div id="div-a">
+        <a href="../نسيت كلمه السر/index.html" style="text-decoration: none;">نسيت كلمه المرور</a>
+        <a href="{% url 'accounts:signup' %}" style="text-decoration: none;">انشاء حساب</a>
+      </div>
+    </form>
+  </main>
+{% endblock body %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}SOUQ > checkout{% endblock %}
+{% block body %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+</head>
+<body>
+
+
+  <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins" style="width: 32%; margin: 0 auto">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4" style="margin-top: 40px;">
+          <div class="Header">
+              <a class="arrow-leftt" href="{% url 'orders:cart' %}"><i class="fa-sharp fa-solid fa-arrow-left"></i></a>
+              <h3 class="Heading ml-5 text-center" style="color: #1687d9;">CheckOut</h3>
+          </div>
+          <div class="card-body">
+            <div class='text-center mb-3'>
+              <i class="fab fa-cc-visa fa-3x mr-3"></i>
+              <i class="fab fa-cc-mastercard fa-3x mr-3"></i>
+              <i class="fab fa-cc-amex fa-3x mr-3"></i>
+              <i class="fab fa-cc-discover fa-3x mr-3"></i>
+            </div>
+        <form class="form" method="POST" autocomplete="off" novalidate>
+          {% csrf_token %}
+          <fieldset style="padding-bottom: 0;">
+            <label for="card-number" class="text-center" style="color: #1687d9;">User Info</label>
+            <hr style="width:10%;margin-bottom:6px;margin-top:8px;"
+            {% if user.first_name %}
+              <h6>Name : {{user.first_name}} {{user.last_name}} </h6>
+            {% else %}
+            <h6 style="padding-bottom: 5px;" class="alert alert-danger">Name : You must be go to profile to add this . <a href="{% url 'accounts:edit' slug=user.profile.slug%}" class="btn mt-2 btn-outline-success-modify">Click Here</a></h6>
+            {% endif %}
+            {% if user.profile.phone %}
+              <h6>Phone : {{user.profile.phone}} </h6>
+            {% else %}
+            <h6 style="padding-bottom: 5px;" class="alert alert-danger">Phone : You must be go to profile to add this . <a href="{% url 'accounts:edit' slug=user.profile.slug%}" class="btn mt-2 btn-outline-success-modify">Click Here</a></h6>
+            {% endif %}
+            {% if user.email %}
+              <h6>Email : {{user.email}} </h6>
+            {% else %}
+            <h6 style="padding-bottom: 5px;" class="alert alert-danger">Email : You must be go to profile to add this . <a href="{% url 'accounts:edit' slug=user.profile.slug%}" class="btn mt-2 btn-outline-success-modify">Click Here</a></h6>
+            {% endif %}
+            {% if user.profile.country %}
+              <h6>Country : {{user.profile.country.name}} </h6>
+            {% else %}
+            <h6 style="padding-bottom: 5px;" class="alert alert-danger">Country : You must be go to profile to add this . <a href="{% url 'accounts:edit' slug=user.profile.slug%}" class="btn mt-2 btn-outline-success-modify">Click Here</a></h6>
+            {% endif %}
+            {% if user.profile.adress %}
+              <h6>city : {{user.profile.adress}} </h6>
+            {% else %}
+            <h6 style="padding-bottom: 5px;" class="alert alert-danger">City : You must be go to profile to add this . <a href="{% url 'accounts:edit' slug=user.profile.slug%}" class="btn mt-2 btn-outline-success-modify">Click Here</a></h6>
+            {% endif %}
+          </fieldset>
+          <hr style="margin-bottom:0;">
+          <fieldset style="padding-bottom: 0;">
+            <label for="card-number" class="text-center" style="color: #1687d9;">Order Info <hr style="width:10%;margin-bottom:0;"></label>
+            <h6>Order Number : {{order.id}}</h6>
+            <h6>{{orderdetials.count}} items</h6>
+            <h6>Total : {{total}} $</h6>
+          </fieldset>
+          <fieldset style="padding-bottom: 0;padding-top: 0;">
+            <label for="card-number" class="text-center" style="color: #1687d9;">Card Info <hr style="width:10%;margin-bottom:0;"></label>
+            <div class="col-12" style="display: flex; gap: 110px;padding: 0;">
+              <label for="card-number" style="color: #1687d9;">Card Number</label>
+              <label for="card-holder" style="color: #1687d9;">Card holder</label>
+            </div>
+            <div class="col-12" style="padding: 0;">
+              <input type="num" name="cardnumber" id="card-number" class="input-cart-number" style="width: 50%;" placeholder="1111-2222-3333-4444" maxlength="16" />
+              <input type="text" name="cardholder"  style="width: 45%;" id="card-holder" />
+            </div>
+          </fieldset>
+          <fieldset style="padding-top: 0;" class="fieldset-expiration">
+            <label for="card-expiration-month" style="color: #1687d9;">Expiration date</label>
+            <div class="col-12" style="
+            display: flex;
+            padding-left:0">
+              <input placeholder="month / year" name="expire" class="mr-4" style="text-transform:uppercase;"
+              type="text"/>
+            </div>
+          </fieldset>
+          <fieldset style="padding-top: 0;" class="fieldset-ccv">
+            <label for="card-ccv" style="color: #1687d9;">CCV</label>
+            <input type="text" name="security" id="card-ccv" maxlength="3" />
+          </fieldset>
+          {% if user.first_name and user.email and user.profile.phone and user.profile.country and user.profile.adress  %}
+            <button type="submit" href="{% url 'orders:ckeck_out' %}"
+              class="btn btn-outline-success-modify
+              btn-login text-uppercase fw-bold" style="border-radius: 20px; width:100%;
+              justify-content: center;height: 28px;padding: 4px;">Check out</button>
+          {% else %}
+          {% endif %}
+        </form>
+          </div>
+        </div>
+    </div>
+  </div>
+    <script src="{% static 'js/checkout.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</body>
+  <style>
+    body{
+      background: linear-gradient(to right, #0062E6, #33AEFF);
+    }
+    .navbar{
+      display: none;
+    }
+    .arrow-leftt{
+      display: flex;
+      position: absolute;
+      margin-top: 5px;
+      margin-left: 5px;
+      background-color: #0062E6;
+      color: aliceblue;
+      height: 25px;
+      width: 25px;
+      padding: 5px;
+      border-radius: 50%;
+    }
+    .arrow-leftt:hover{
+      color: aliceblue;
+      text-decoration: none;
+    }
+  </style>
+{% endblock body %}

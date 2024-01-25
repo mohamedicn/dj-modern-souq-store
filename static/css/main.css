@@ -1,0 +1,156 @@
+.btn-outline-success-modify {
+    color: #ffffff;
+    background-color: #007bff;
+    border-color: #007bff;
+    margin-left: 20px;
+}
+
+.btn-outline-success-modify:hover {
+color: #007bff;
+background-color: transparent;
+background-image: none;
+border-color: #007bff;
+}
+.all_products_pagination{
+    margin: 0 auto;
+}
+.modfiy-center{
+    margin: 0 auto;  
+}
+.profile-imgg{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.profile-img{
+    width: 290px;
+    height: 100%;
+}
+.profile-img-defult{
+    width: 200px;
+    height: 200px;
+}
+.review-img{
+    width: 150px;
+    height: 150px;
+}
+.info{
+    display: block;
+    text-align: center;
+}
+.order-bold{
+    font-weight: 400;
+    font-size: 17px;
+}
+.project-image img{
+    width: 100%;
+    height: 190px;
+}
+.project-imagee img{
+    max-height: 300px;
+    max-width: 540px;
+}
+.card{
+    box-shadow: 0 5px 25px rgba(1 1 1/50%);
+}
+
+.card-btn{
+    text-decoration: none;
+    transition: 0.7s ease;
+    -webkit-transition: 0.7s ease;
+    -moz-transition: 0.7s ease;
+    -ms-transition: 0.7s ease;
+    -o-transition: 0.7s ease;
+}
+.card-btn:hover{
+    transform: scale(1.1,1.1);
+}
+.img-sliderss img{
+    height: 600px;
+    width: 100%;
+}
+.carousel-indicators li{
+    height: 8px;
+    background-color: #ec1c23;
+    cursor: pointer;
+}
+.badge {
+    border-radius: 0.125rem;
+    margin-right: 10px;
+    margin-top: 23px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+.purple {
+    background-color: #9c27b0;
+    color: aliceblue;
+}
+.blue {
+    background-color: #2196f3;
+    color: aliceblue;
+}
+.red {
+    background-color: #f44336;
+    color: aliceblue;
+}
+.mr-1, .mx-1 {
+    margin-right: 0.25rem;
+}
+
+.containerrrr {
+    padding-right: 0px;
+    padding-left: 0px;
+
+}
+.moda{
+    margin-right: -40px;
+    
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 15px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+input[type=text], input[type=email] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 15px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=email]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    margin: 20px auto;
+    display: flex;
+}
+.btn-google {
+    color: white !important;
+    background-color: #ea4335;
+}
+
+.btn-facebook {
+    color: white !important;
+    background-color: #3b5998;
+}

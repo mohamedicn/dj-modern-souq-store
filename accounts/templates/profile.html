@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/about_me.css' %}">
+    <title>Document</title>
+</head>
+<style>
+    .main-container{
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+    h6{
+        font-size: 22px;
+        margin: 10px;
+    }
+    .btn {
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: none !important;
+    }
+    .btn-outline-success-modify {
+        border-radius: 5px;
+        color: #ffffff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+</style>
+<body dir="rtl">
+    <div id="container">
+        <nav id="nav"></nav>
+        <main id="cart-orders-main">
+            <div id="sitbar">
+                <div id="person-name">
+                    <h2> اهلا زياد احمد </h2>
+                    <p>ziad0713@gmail.com</p>
+                </div>
+                <hr>
+                <a class="icon-sitbar" href="{% url 'accounts:profile' slug=user.profile.slug %}">
+                  <img src="{% static 'assets/icon/account-profile.svg' %}" alt="">
+                  <p>حساب</p>
+                </a>
+                <a class="icon-sitbar" href="{% url 'accounts:order' slug=user.profile.slug %}">
+                    <img src="{% static 'assets/icon/account-orders.svg' %}" alt="">
+                    <p>الطلبات</p>
+                </a>
+                <a class="icon-sitbar" href="{% url 'accounts:showproduct_favorites' slug=user.profile.slug %}">
+                    <img src="{% static 'assets/icon/account-wishlist-v2.svg' %}" alt="">
+                    <p>المفضله</p>
+                </a>
+                </a>
+                <hr>
+                <a id="login-out" href="/">
+                    <p> الصفحة الرئيسية </p>
+                </a>
+            </div>
+            <div id="cart-orders">
+                <div id="page-name">
+                    <h1>Profile</h1>
+                </div>
+                <div class="container dark-grey-text mt-5 main-container">
+                    <div class="row">
+                        <div class="container ">
+                            <div class="row mt-5">
+                                <div class="profile-imgg col-md-12">
+                                    {% if profile.image %}
+                                    <img style="margin-bottom: 20px;border-radius: 50%;    height: 200px;
+                                    width: 200px;" class="profile-img" src="{{profile.image.url}}" alt="card-img-top">
+                                    {% else %}
+                                    <img style="margin-bottom: 20px;border-radius: 50%;     height: 200px;
+                                    width: 200px;" class="profile-img-defult" src="{% static 'img/user_no_image.png' %}"
+                                        alt="card-img-top">
+                                    {% endif %}
+                                </div>
+                                <div class="info mt-4 col-md-12">
+                                    <h6><i class="fa-solid fa-signature"></i> الاسم : {{profile.user.first_name}}
+                                        {{profile.user.last_name}} </h6>
+                                    <h6><i class="fa-solid fa-envelope"></i> الايميل : {{profile.user.email}} </h6>
+                                    <h6><i class="fa-solid fa-phone"></i> رقم التلفون : {{profile.phone}} </h6>
+                                    <h6><i class="fa-solid fa-earth-americas"></i> الدوله :
+                                        {{profile.country.name}} </h6>
+                                    <h6><i class="fa-sharp fa-solid fa-city"></i> المدينه : {{profile.adress}} </h6>
+                                    <a class="btn btn-outline-success-modify my-2 my-sm-0"
+                                        href="{% url 'accounts:edit' slug=user.profile.slug%}">تعديل البروفايل</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

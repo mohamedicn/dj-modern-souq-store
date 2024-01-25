@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/about_me.css' %}">
+    <title>Document</title>
+</head>
+
+<body dir="rtl">
+    <div id="container">
+        <nav id="nav"></nav>
+        <main id="cart-orders-main">
+            <div id="sitbar">
+                <div id="person-name">
+                    <h2> اهلا زياد احمد </h2>
+                    <p>ziad0713@gmail.com</p>
+                </div>
+                <hr>
+                <a class="icon-sitbar" href="{% url 'accounts:profile' slug=user.profile.slug %}">
+                    <img src="{% static 'assets/icon/account-profile.svg' %}" alt="">
+                    <p>حساب</p>
+                </a>
+                <a class="icon-sitbar" href="{% url 'accounts:order' slug=user.profile.slug %}">
+                    <img src="{% static 'assets/icon/account-orders.svg' %}" alt="">
+                    <p>الطلبات</p>
+                </a>
+                <a class="icon-sitbar" href="{% url 'accounts:showproduct_favorites' slug=user.profile.slug %}">
+                    <img src="{% static 'assets/icon/account-wishlist-v2.svg' %}" alt="">
+                    <p>المفضله</p>
+                </a>
+                <hr>
+                <a id="login-out" href="/">
+                    <p> الصفحة الرئيسية </p>
+                </a>
+            </div>
+            <div id="theOrders">
+                <div id="page-name">
+                    <h1>تفاصيل الاوردر</h1>
+                </div>
+                {% for detail in order_details  %}
+                    <div class="product-card">
+                        <div class="name-order">
+                            <h4>السعر {{detail.PRDCost}}</h4>
+                            {% if detail.PRDNew %}
+                                <p>منتج جديد</p>
+                            {% endif %}
+                        </div>
+                        <hr>
+                        <div class="text-product">
+                            <a href="{% url 'products:product_detail' detail.slug %}" class="shipping" id="done">تفاصيل المنتج</a>
+                            {% if detail.PRDIImage %}
+                                <img style="opacity: 1;" src="{{ detail.PRDIImage.url }}" alt="#">
+                            {% endif %}
+                            <div>
+                                <h4>{{detail.PRDname}}</h4>
+                                <p>{{detail.PRDDesc}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
+        <footer id="footer">
+
+        </footer>
+    </div>
+</body>
+
+</html>

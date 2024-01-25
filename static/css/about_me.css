@@ -1,0 +1,385 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+p{
+    color: #818181;
+}
+a p:hover{
+    color: black;
+}
+a{
+    text-decoration: none;
+}
+
+nav{
+    width: 100%;
+    height: 20px;
+    background-color: yellow;
+}
+footer{
+    background-color: yellow;
+    width: 100%;
+    height: 400px;
+}
+
+/*------cart-Orders-------*/
+#cart-orders-main{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    min-width: 100%;
+}
+#sitbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 400px;
+    padding: 40px;
+    position: sticky;
+    top: 0px;
+}
+#sitbar hr{
+    border: none;
+    background-color: #f1f1f1;
+    height: 1px;
+}
+#sitbar a p{
+    display: inline-block;
+    font-size: 19px;
+    margin-right: 10px;
+}
+#sitbar img{
+    width: 25px;
+}
+
+#cart-orders{
+    background-color: #f1f1f1;
+    padding: 40px;
+}
+#cart-orders #page-name{
+    margin-bottom: 20px;
+    padding-right: 20px;
+    border-right: solid 10px yellow;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#cart-orders #page-name button{
+    border: none;
+    color: rgb(0, 0, 0);
+    background-color: yellow;
+    font-size: large;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+#cart-orders #page-name button:hover{
+    background-color: white;
+}
+#cart-orders .product-card{
+    width: 100%;
+    height: 200px;
+    background-color: white;
+    margin: 20px 0px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    
+}
+#cart-orders .product-card .name-div{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 0px 20px;
+}
+#cart-orders .product-card .text-div{
+    display: flex;
+    flex-direction: row;
+    padding: 0px 20px;
+}
+#cart-orders .product-card .but-div{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+#cart-orders .product-card .but-div button,
+#cart-orders .product-card .but-div .remove-product{
+    border: none;
+    padding: 10px;
+    font-weight: bold;    
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+}
+#cart-orders .product-card .but-div select{
+    font-size: 18px;
+    padding: 5px;
+}
+#cart-orders .product-card .but-div button:hover,
+#cart-orders .product-card .but-div .remove-product:hover{
+    background-color: yellow;
+
+}
+#cart-orders .product-card .img-div{
+    grid-row: 1/4;
+}
+#cart-orders .product-card .img-div img{
+    height: 190px;
+}
+
+#buy-porducts{
+    position: fixed;
+    width: 400px;
+    min-height: 400px;
+    background-color: yellow;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 40px;
+    box-shadow: 2px 2px 5px #ccc;
+}
+#buy-porducts div{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+#buy-porducts div #inp-text{
+    width: 80%;
+    padding-right: 20px;
+    border-radius: 0px 7px 7px 0px;
+}
+#buy-porducts div #inp-text:focus{
+    outline: none;
+}
+#buy-porducts div #inp-sub{
+    width: 20%;
+    border-radius: 7px 0px 0px 7px;
+}
+
+#buy-porducts div #inp-sub , #inp-text{
+    height: 40px;
+    font-size: 19px;
+    border: none;
+}
+#buy-porducts hr{
+    border: none;
+    background-color: #ffffff;
+    height: 2px;
+    width: 80%;
+}
+#buy-porducts #img-div{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#buy-porducts #img-div img{
+    width: 80px;
+}
+#buy-porducts div p{
+    font-size: 19px;
+}
+#buy-porducts a{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    font-size: 19px;
+    text-align: center;
+    padding-top: 10px;
+    cursor: pointer;
+}
+#buy-porducts a:hover ,#inp-sub:hover{
+    transition: 0.5;
+    background-color: #e9e9e9;
+}
+#buy-porducts a:active ,#inp-sub:active{
+    transition: 0.5;
+    background-color: #fcfd9f;
+}
+#buy-porducts #stop-buy-porducts{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 40px;
+}
+#buy-porducts #stop-buy-porducts:hover{
+    background-color: red;
+}
+/*--------------------------------------*/
+/*-------orders--------*/
+
+#theOrders{
+    background-color: #f1f1f1;
+    padding: 40px;
+} 
+#theOrders #page-name{
+    margin-bottom: 20px;
+    padding-right: 20px;
+    border-right: solid 10px yellow;
+}
+#theOrders #page-name p{
+    font-size: 18px;
+}
+#theOrders .product-card{
+    width: 100%;
+    height: 200px;
+    background-color: white;
+    margin: 20px 0px;
+    display: flex;
+    flex-direction: row;
+}
+#theOrders .product-card .text-product{
+    display: flex;
+    flex-direction: row;
+    padding: 0px 20px;
+    padding: 0px 30px;
+    position: relative;
+}
+
+#theOrders .product-card .text-product .shipping{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 90px;
+    padding: 2px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+#theOrders .product-card .text-product #done{
+    background-color: green;
+}
+#theOrders .product-card .text-product #cansel{
+    background-color: red;
+}
+#theOrders .product-card .text-product #load{
+    background-color: #0418ff;
+}
+#theOrders .product-card .text-product span{
+    background-color: blue;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 5px;
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 5px;
+    color: white;
+    opacity: 1;
+}
+
+#theOrders .product-card .text-product div{
+    padding: 0px 30px;
+}
+#theOrders .product-card .text-product div h4{
+    margin-bottom: 20px;
+}
+#theOrders .product-card hr{
+    width: 2px;
+    height: 150px;
+    margin-top: 25px;
+}
+#theOrders .product-card .text-product div{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#theOrders .product-card .text-product img{
+    height: 200px;
+    opacity: .5;
+}
+#theOrders .product-card .name-order{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 30px;
+    width: 300px;
+}
+#theOrders .product-card .name-order h4{
+    margin-bottom: 20px;
+}
+/*----------------------------*/
+/*----------like product---------------*/
+#like-product{
+    background-color: #f1f1f1;
+    padding: 40px;
+} 
+#like-product #page-name{
+    margin-bottom: 20px;
+    padding-right: 20px;
+    border-right: solid 10px yellow;
+}
+#like-product #page-name p{
+    font-size: 18px;
+}
+#like-product .all-product-card{
+    width: 100%;
+    min-height: 200px;
+    background-color: #f1f1f1;
+    margin: 20px 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+#like-product .all-product-card .div-card{
+    background-color: rgb(255, 255, 255);
+    width: 200px;
+    padding: 10px;
+    margin: 5px;
+}
+#like-product .all-product-card .div-card img{
+    width: 180px;
+    margin-bottom: 20px;
+}
+
+#like-product .all-product-card .div-card .div-card-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#like-product .all-product-card .div-card .div-card-body h5{
+    text-align: center;
+}
+#like-product .all-product-card .div-card .div-card-body span{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+#like-product .all-product-card .div-card .div-card-body span div img{
+    width: 12px;
+    transform: translateY(10px);
+}
+#like-product .all-product-card .div-card .div-card-body span p{
+    font-weight: bold;
+    color: black;
+}
+#like-product .all-product-card .div-card .div-card-body a{
+    text-decoration: none;
+    color: black;
+    padding: 10px 20px;
+    border: solid 2px black;
+    transition: 0.5s;
+}
+#like-product .all-product-card .div-card .div-card-body a:hover{
+    border: solid rgb(0, 0, 0) 2px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+/*-----------------------------------------------*/
+/*---------------------pay-----------------------*/

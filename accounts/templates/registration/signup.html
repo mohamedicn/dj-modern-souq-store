@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+<main class="main-signin">
+    <form method="POST">
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <div style="text-align: center;" class="alert alert-danger" role="alert">{{ message }}</div>
+                {% elif message.tags == 'success' %}
+                    <div style="text-align: center;" class="alert alert-success" role="alert">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <span id="email-validation-message"></span>
+        {% csrf_token %}
+        <div id="div-img"><img src="{% static 'assets/icon/person-fill.svg' %}" alt=""></div>
+        <h2>انشاء الحساب</h2>
+        <div style="display: flex;">
+            <input name="first_name" style="width: 49%;margin-left: 2%;" type="text" placeholder="الاسم الاول" required>
+            <input name="scand_name" style="width: 49%;" type="text" placeholder="الاسم الثاني" required>
+        </div>
+        <input id="email" name="email" type="email" placeholder="البريد الالكتروني" required>
+        <input name="password" type="password" placeholder="كلمه المرور" required minlength="8">
+        <input name="passwordconfigration" type="password" placeholder="تاكيد كلمه المرور " required minlength="8">
+        <button type="submit" style="background-color:yellow;border: none;">انشاء حساب </button>
+        <a href="{% url 'accounts:signin' %}" 
+        style="text-decoration: none;margin-top: 7px;text-align: center;"
+        >لدي حساب بالفعل!</a>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#email").on("input", function () {
+                var emailValue = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'accounts:check_email_availability' %}",
+                    data: { email: emailValue },
+                    success: function (response) {
+                        var messageSpan = $("#email-validation-message");
+                        if (response.available) {
+                            messageSpan.text("Email is available.");
+                            messageSpan.css("background-color", "#d4edda");
+                            messageSpan.css("color", "#155724");
+                            messageSpan.css("padding", "5px");
+                            messageSpan.css("text-align", "center");
+                        } else {
+                            messageSpan.text("Email is not available.");
+                            messageSpan.css("background-color", "#f8d7da");
+                            messageSpan.css("color", "#721c24");
+                            messageSpan.css("padding", "5px");
+                            messageSpan.css("text-align", "center");
+                        }
+                    },
+                });
+            });
+        });
+    </script>
+</main>
+{% endblock body %}

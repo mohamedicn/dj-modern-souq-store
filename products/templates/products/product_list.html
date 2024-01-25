@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <img src="{% static 'assets/img/436f1a4b-a39f-4ae7-90d1-928e74b7b549.png' %}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item active">
+                <img src="{% static 'assets/img/9bf5aca7-f986-46e2-8464-3ba93d5b0014.png' %}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'assets/img/ad6a5676-7cb6-4400-9ce0-b92894dd79ed.png' %}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'assets/img/c993f175-bb93-4125-af20-322453075a4c.png' %}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'assets/img/ca0f4c62-6638-45eb-a681-b241ac4badb9.png' %}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'assets/img/ea506211-b2ef-4dc0-af25-476a5b8d340f.png' %}" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div id="slider">
+        <div id="but-slider">
+            <button id="but-slider-right" onclick="FnRight()"><img src="{% static 'assets/icon/chevron-right.svg' %}"
+                    alt="right"></button>
+            <button id="but-slider-left" onclick="FnLeft()"><img src="{% static 'assets/icon/chevron-left.svg' %}" alt="left"></button>
+        </div>
+        <ul id="ul-slider">
+            {% for cat in category %}
+                <a href="">
+                    <li>{{cat}}</li>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <main>
+
+        <div id="offers-div">
+            <div id="div-1">
+                <h5 class="h5">اشترى وانت مرتاح</h5>
+                <a href=""><img src="{% static 'assets/img/Offers/افضل المبيعات.png' %}" alt="."></a>
+                <a href=""><img src="{% static 'assets/img/Offers/اقوي العروض.png' %}" alt="."></a>
+                <a href=""><img src="{% static 'assets/img/Offers/تصنيفات.png' %}" alt="."></a>
+                <a href=""><img src="{% static 'assets/img/Offers/منتجات جديده.png' %}" alt="."></a>
+            </div>
+            <div id="div-2">
+                <h5 class="h5">اقوى الخصومات</h5>
+                <a href=""><img src="{% static 'assets/img/Offers/خصم1.png' %}" alt="."></a>
+                <a href=""><img src="{% static 'assets/img/Offers/خصم2.png' %}" alt="."></a>
+                <a href=""><img src="{% static 'assets/img/Offers/خصم3.png' %}" alt="."></a>
+                <a href=""><img src="{% static 'assets/img/Offers/خصم4.png' %}" alt="."></a>
+            </div>
+            <div id="div-3">
+                <h5>شوف كل العروض</h5>
+                <a href=""><img src="{% static 'assets/img/Offers/اعلان1.png' %}" alt="."></a>
+                <a href=""><img src="{% static 'assets/img/Offers/اعلان2.png' %}" alt="."></a>
+            </div>
+        </div>
+
+        <div id="main-cards">
+            {% for category, products in category_product_map.items  %}
+                <section>
+                    <div class="div-name-section">
+                        <h3>{{category}}</h3>
+                        <a href="{% url 'products:product_list_more' category %}">المزيد...</a>
+                    </div>
+                    <ul>
+                        {% for product in products %}
+                            {% if product.PRDIs_Active  %}
+                                <li>
+                                    <div class="div-card">
+                                        {% if product.PRDIImage %}
+                                            <img src="{{ product.PRDIImage.url }}" alt="...">
+                                        {% else %}
+                                            <img style="height: 113px;" src="{% static 'img/not_found_image.jpg' %}" alt="...">
+                                        {% endif %}
+                                        <div class="div-card-body">
+                                            <h5>{{product.PRDname|slice:":25"}}</h5>
+                                            <span>
+                                                <div class="stars-img">
+                                                    <img src="{% static 'assets/icon/stars2.png' %}" alt="stars">
+                                                    <img src="{% static 'assets/icon/stars2.png' %}" alt="stars">
+                                                    <img src="{% static 'assets/icon/stars2.png' %}" alt="stars">
+                                                    <img src="{% static 'assets/icon/stars2.png' %}" alt="stars">
+                                                    <img src="{% static 'assets/icon/stars1.png' %}" alt="stars">
+                                                </div>
+                                                {% if product.PRDPriceDiscount > 0  %}
+                                                    <p class="salary" class="mr-1">
+                                                        <del>{{product.PRDPrice}} $</del>
+                                                    </p>
+                                                    <p class="salary">{{product.PRDCost}}$</p>
+                                                {% else %}
+                                                    <p class="salary">{{product.PRDPrice}}$</p>
+                                                {% endif %}
+                                                
+                                            </span>
+                                            <a class="buy-but" href="{% url 'products:product_detail' product.slug %}">اضاف الى العربه</a>
+                                        </div>
+                                    </div>
+                                    </li>
+                            {% else %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock body %}

@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <style>
+        .readonly a{
+            pointer-events: none;
+            color: #ffffff;
+            text-decoration: none;
+            cursor: default;
+        }
+    </style>
+{% endblock %}

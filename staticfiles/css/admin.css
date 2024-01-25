@@ -1,0 +1,10 @@
+#header{
+
+    color: #ffffff;
+}
+#branding h1,
+#header a:link,
+#header a:visited,
+#logout-form button{
+    color: #ffffff;
+}

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+        EditProfile 
+{% endblock %}
+{% block body %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/editprofile.css' %}">
+    <link rel="stylesheet" href="{% static 'flags/sprite.css' %}">
+</head>
+    <style>
+        input[type=text], input[type=username]{
+            height: 20px;
+        }
+        select {
+            width: 100%;
+            padding: 3px;
+            height: 30px;
+            padding-left: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+        .upload {
+            padding: 9px;
+            border-radius: 11px;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: white;
+            cursor: pointer;
+            justify-content: center;
+            display: flex;
+        }
+        input[type=email]{
+            width: 100%;
+            height: 20px;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+            
+        input[type=email]:focus{
+            background-color: #ddd;
+            outline: none;
+        }
+        .save-back {
+            display: flex;
+            height: 36px;
+            margin-top: 10px;
+            justify-content: space-around;
+            text-align: center;
+            align-items: center;
+        }
+    </style>
+    <div class="container">
+        <h4 class="titttle">Edit your profile</h4>
+        {% if messages %}
+        <style>
+            .titttle{
+                margin-bottom: 10px;
+            }
+        </style>
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row row-space">
+                <div class="col-6">
+                    <img class='profile_img' style="margin-top: 90px;" src="/static/img/profile_img.svg" alt="" width="350px" ,height="350px" >
+                </div>
+                <div class="col-6">
+                    <div class="center">
+                        <div>
+                            <div style="width: 50%;margin: 0 auto;">
+                                <div>
+                                    <label class="profile-label"> Profile Image </label><br><br>
+                                    {% if profile.image  %}
+                                        <img class="profile-img" src="{{profile.image.url}}" name="image" alt="card-img-top">
+                                    {% else %}
+                                        <img width="110" height="100" style="margin: 0 auto;
+                                        display: flex;width: 200px; height: 200px;"
+                                        class = "pimg" name="image" src="{% static 'img/user_no_image.png' %}">
+                                    {% endif %}
+                                </div>
+                                <label class = "upload" style="width: 35%;
+                                margin: 0 auto;">
+                                select image
+                                <input type="file" name="image" value="" style="display: none;" class="form-control file">
+                                </label>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <label class="label" style="margin: 0 auto;">الاسم الاول</label>
+                                        <input class="input--style-4" type="text" name="first_name" value="{{first_name}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <label class="label" style="margin: 0 auto;">الاسم الثانس</label>
+                                        <input class="input--style-4" type="text" name="last_name" value="{{last_name}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <label class="label" style="margin: 0 auto;">الايميل</label>
+                                        <input class="input--style-4" style="font-size: 13px;" type="email" name="email" value="{{email}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <label class="label" style="margin: 0 auto;">رقم التلفون</label>
+                                        <input class="input--style-4" type="text" id="phone" name="phone" value="{{phone}}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="country">الدولة 
+                                        <i class="{{ country.flag_css }}"></i></label>
+                                        <select name="country">
+                                            {% for code, name in country_list %}
+                                                <option value="{{ code }}"
+                                                {% if country == code %}
+                                                selected="selected"{% endif %}>{{ name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <label class="label" style="margin: 0 auto;">المدينه</label>
+                                        <input class="input--style-4" type="text" name="adress" value="{{adress}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="save-back">
+                        <button class="upload save" href=""> حفظ </button>
+                        <a  class="back btn btn-outline-success-modify" href="{% url 'accounts:profile' slug=user.profile.slug %}" > back </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock body %}

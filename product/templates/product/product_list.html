@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}SOUQ{% endblock %}
+{% block body %}  
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">{{message}}</div>
+        {% endfor %}
+    {% endif %}
+    <div class="container mt-3">
+        {{name}}
+        <div class="row">
+            {% for product in product_list %}
+            {% if product.PRDIs_Active  %}
+                    <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
+                        <div class="card" style="width: 17rem; height:20.5rem;">
+                            <div class="project-image">
+                                {% if product.PRDIImage  %}
+                                    <img src="{{product.PRDIImage.url}}" class="card-img-top" alt="...">
+                                {% else %}
+                                    <img src="{% static 'img/not_found_image.jpg' %}" class="card-img-top" alt="...">
+                                {% endif %}     
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title text-center"><a href="{% url 'products:product_detail' product.slug %}" style="color: black ;text-decoration:none">{{product}}</a></h4>
+                                <p class="card-text text-center">
+                                    {% if product.PRDPriceDiscount > 0  %}
+                                        <span class="mr-1">
+                                            <del>{{product.PRDPrice}} $</del>
+                                        </span>
+                                        <span>{{product.PRDCost}}$</span>
+                                    {% else %}
+                                        <span>{{product.PRDPrice}}$</span>
+                                    {% endif %}
+                                </p>
+                                <p>
+                                    {% if product.PRDPriceDiscount > 0  %}
+                                        <a href="" style="text-decoration: none ;">
+                                            <span class="badge red mr-3 ">Price offer</span>
+                                        </a>
+                                    {% else %}
+                                                
+                                    {% endif %}
+                                    {% if product.PRDNew %}
+                                        <a href="" style="text-decoration: none ;">
+                                        <span class="badge badge-pill badge blue mr-3">NEW</span>
+                                        </a>
+                                    {% endif %}
+                                    {% if product.PRDSeller %}
+                                        <a href="" style="text-decoration: none">
+                                            <span class="badge red badge-pill">Bestseller</span>
+                                        </a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    
+                {% endif %}
+            
+            {% empty %}
+                    <h4 style="margin: auto;" class="alert alert-warning"> No Products here ,
+                        <a class=" btn ml-2 btn-outline-success-modify" style="text-decoration: none; border: 1px solid #00dcff;" href="{% url 'product:product_list' %}"> All Products</a></h4>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container mt-5">
+        {% if product_list.has_other_pages %}
+            <div class="row">
+                <div class="all_products_pagination">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if product_list.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page={{product_list.previous_page_number}}">Previous</a></li>
+                            {% endif %}
+                            {% for i in product_list.paginator.page_range %}
+                                <li class="page-item"><a class="page-link" href="?page={{i}}"><span>{{i}}</span></a></li>
+                            {% endfor %}
+                            {% if product_list.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{product_list.next_page_number}}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock body %}

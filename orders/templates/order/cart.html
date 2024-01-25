@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/about_me.css' %}">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'https://code.jquery.com/jquery-3.6.0.min.js' %}"></script>
+</head>
+<body dir="rtl">
+    <div id="container">
+        <nav id="nav"></nav>
+        <main id="cart-orders-main">
+            <div id="sitbar">
+                <div id="person-name">
+                    <div id="coupon-validation-message"></div>
+                </div>
+                <div id="person-name">
+                    <h2>الاجمالي</h2>
+                    <p style="text-align: center;">{{order.all_total}} $</p>
+                    <p style="display: none;" name="order_id" value="{{order.id}}">{{order.id}}</p>
+                </div>
+                <hr>
+                <div style="display: flex;" class="icon-sitbar">
+                    <h4 style="width: 50%;font-size: 18px;">رقم الاوردر</h4>
+                    <p style="text-align: center;font-weight: 900;">{{order.id}}</p>
+                </div>
+                <div style="display: flex;" class="icon-sitbar">
+                    <h4 style="width: 50%;font-size: 18px;">عدد المنتجات </h4>
+                    <p style="text-align: center;font-weight: 900;">{{orderdetials.count}}</p>
+                </div>
+                <div style="display: flex;" class="icon-sitbar buy-porducts">
+                    <form method="POST" action="{% url 'orders:discount_value' %}" style="display: flex;">
+                        {% csrf_token %}
+                        <input id="inp-text" type="text" style="border: 2px solid rgb(122 122 122);
+                        border-radius: 10px;
+                        text-align: center;" name="discount_value" placeholder="اضاف كوبون">
+                        <button style="border: none;
+                        font-size: 20px;
+                        padding: 8px;border-radius: 10px;
+                        " id="inp-sub" type="submit">اضافه</button>
+                    </form>
+                </div>
+                <div style="display: flex;" class="icon-sitbar buy-porducts">
+                    <p style="width: 50%;
+                    font-size: 18px;">رسوم التوصيل</p>
+                    <p>20$ عند التوصيل</p>
+                </div>
+                <div style="display: flex;" class="icon-sitbar buy-porducts">
+                    <a style="    width: 100%;
+                    background-color: rgb(122 122 122);
+                    color: white;
+                    height: 40px;
+                    border: none;
+                    border-radius: 7px;
+                    font-size: 19px;
+                    text-align: center;
+                    padding-top: 10px;
+                    cursor: pointer;" href="{% url 'orders:paypal_pament'%}">اتمام الشراء</a>
+                </div>
+                <hr>
+                <a style="text-align: center;" id="login-out" href="/">
+                    <p> الصفحة الرئيسية </p>
+                </a>
+            </div>
+            <div id="cart-orders">
+                {% if orderdetials %}
+                    {% for detail in orderdetials  %}
+                        <div class="product-card">
+                            <div class="img-div">
+                                {% if detail.product.PRDIImage %}
+                                    <img style="height: 200px;width: 200px;" 
+                                    src="{{detail.product.PRDIImage.url}}" alt="">
+                                {% else %}
+                                    <img style="height: 200px;width: 200px;" 
+                                    src="{% static 'img/not_found_image.jpg' %}" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="name-div">
+                                <h2>{{detail.product.PRDname}}</h2>
+                                <h2>{{detail.total}}</h2>
+                                
+                            </div>
+                            <div class="text-div">
+                                <p>
+                                    
+                                    {{detail.product.PRDDesc}}
+                                </p>
+                            </div>
+                            <div class="but-div">
+                                <div>
+                                    <button class="like-product"> <img src="{% static 'assets/icon/wishlist.svg' %}" alt="#"> اضاف الى المفضله </button>
+                                    <a href="{% url 'orders:remove_from_Cart' orderdetials_id=detail.id %}"
+                                        class="remove-product"> 
+                                        <img src="{% static 'assets/icon/trash.svg' %}" alt="#"> ازاله </a>
+                                </div>
+                                <div class="counter" style="display: flex;">
+                                    <a href="{% url 'orders:sub_qty' orderdetials_id=detail.id %}" class="minus mr-3 btn btn-outline-success-modify
+                                    text-uppercase fw-bold">-</a>
+                                    <label class="quantity fw-bold text-black"
+                                    style="font-size: 24px;
+                                    font-weight: 500;
+                                    text-align: center;margin-right: 10px;
+                                    margin-left: 10px;" name="qty" >{{detail.quantity}}</label>
+                                    <a href="{% url 'orders:add_qty' orderdetials_id=detail.id %}" class="plus ml-3 btn btn-outline-success-modify
+                                    text-uppercase fw-bold">+</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                <h4 style="margin: auto; margin-top:50px;margin-bottom:50px;" class="alert alert-warning">There are no purchases here,
+                    <a class=" btn ml-2 btn-outline-success-modify"
+                    style="text-decoration: none; border: 1px solid #00dcff;"
+                    href="{% url 'products:product_list' %}"> All Products</a></h4>
+                {% endif %}
+            </div>
+
+        </main>
+        <!-- <footer id="footer">
+
+        </footer> -->
+        <style>
+            .plus,
+            .minus{
+                border: 1px solid #1687d9;
+                border-radius: 50%;
+                width: 25px;
+                height: 25px;
+                background-color: #1687d9;
+                color: aliceblue;
+                font-weight: 900;
+                display: flex;
+                justify-content: center;
+                padding: 0;
+            }
+        </style>
+        <script>
+            
+
+            
+            $(document).ready(function () {
+                $("#inp-text").on("input", function () {
+                    var couponValue = $(this).val();
+                    if (couponValue.trim() === "") {
+                        $("#coupon-validation-message").empty();
+                        return;
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: "{% url 'orders:ajax_check_coupon' %}",
+                        data: { coupon_value: couponValue },
+                        success: function (response) {
+                            var messageDiv = $("#coupon-validation-message");
+                            if (response.message) {
+                                messageDiv.html(response.message);
+                                if (response.success) {
+                                    messageDiv.css("background-color", "#d4edda");
+                                    messageDiv.css("color", "#155724");
+                                    messageDiv.css("padding", "5px");
+                                    messageDiv.css("text-align", "center");
+                                } else {
+                                    messageDiv.css("background-color", "#f8d7da");
+                                    messageDiv.css("color", "#721c24");
+                                    messageDiv.css("padding", "5px");
+                                    messageDiv.css("text-align", "center");
+                                }
+                            } else {
+                                messageDiv.empty();
+                            }
+                        },
+                    });
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

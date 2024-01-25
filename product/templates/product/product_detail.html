@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    SOUQ > {{product_detail.slug}}
+{% endblock %}
+{% block body %}
+    <main class="mt-5 pt-4">
+        <div class="container dark-grey-text mt-5">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">{{message}}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="row">
+                <div class="col-md-6 mb-5 project-imagee">
+                    {% if product_detail.PRDPriceDiscount > 0  %}
+                        <a href="" style="text-decoration: none ;position: absolute;transform:rotate(-35deg)">
+                            <span class="badge red mr-5 mt-2">Price offer</span>
+                        </a>
+                    {% else %}
+                                    
+                    {% endif %}
+                    {% if product_detail.PRDIImage  %}
+                        <img src="{{product_detail.PRDIImage.url}}" class="card-img-top" alt="...">
+                    {% else %}
+                        <img src="{%static 'img/not_found_image.jpg'%}" class="card-img-top" alt="...">
+                    {% endif %} 
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="p-4 ml-5">
+                        <div class="mb-3">
+                        <a href="" style="text-decoration: none">
+                            <span class="badge purple mr-1">{{product_detail.PRDcategory}}</span>
+                        </a>
+                        
+                        {% if product_detail.PRDNew %}
+                            <a href="" style="text-decoration: none">
+                                <span class="badge blue mr-1">New</span>
+                            </a>
+                        {% endif %}
+                        {% if product_detail.PRDSeller %}
+                            <a href="" style="text-decoration: none">
+                                <span class="badge red mr-1">Bestseller</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                        
+                        <p class="lead">
+                            {% if product_detail.PRDPriceDiscount > 0  %}
+                                <span class="mr-1">
+                                    <del>{{product_detail.PRDPrice}} $</del>
+                                </span>
+                                <span>{{product_detail.PRDCost}}$</span>
+                            {% else %}
+                                <span>{{product_detail.PRDPrice}}$</span>
+                            {% endif %}
+                        </p>
+                        <h1 class="font-weight-bold">{{product_detail}}</h1>
+                        <p class="lead font-weight-bold">Description</p>
+                        <p>{{product_detail.PRDDesc}}</p>
+
+                        <form id="formaddtocart" class="d-flex justify-content-left" action="{% url 'orders:add_to_cart' %}">
+                        <button type="button" class="btn btn ml-2 btn-outline-success-modify my-2 my-sm-0" data-toggle="modal" data-target="#staticBackdrop">
+                            Add to cart <i class="fas fa-shopping-cart ml-1"></i>
+                        </button>
+                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Add To Cart</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <label class="label">Quantity : </label>
+                                                <input class="input--style-4" type="number" name="qty" value="1" >
+                                                <input type="hidden" name="product" value="{{product_detail.slug}}">
+                                                <input type="hidden" name="product_price" value="{{product_detail.PRDCost}}">
+                                            </div> 
+                                        </div>
+                                        <!-- <div class="col-6">
+                                            <div class="input-group" style="border-radius: 25%;
+                                            border: 2px solid #2196f3;
+                                            padding: 7px;
+                                            width: 80%;
+                                            color: #2196f3;">
+                                                <label class="label">Total Price : </label>
+                                                <label class="label ml-3"> {{product_detail.PRDCost}} $</label>
+                                                
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="btmclose" data-dismiss="modal">Close</button>
+                                    <button class="btn ml-2 btn-outline-success-modify my-2 my-sm-0" onclick="addtocart()" type="button">Add To Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'accounts:product_favorites' slug=product_detail.slug %}" class="btn ml-2 btn-outline-success-modify my-2 my-sm-0" type="favorite">
+                            <i class="fa-regular fa-heart" style="font-size: 20px;"></i>
+                        </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <hr>
+    <div class="container mb-5">
+            <div class="row">
+                <div class="modfiy-center mb-3">
+                    <h6>Leave Your Review</h6>
+                </div>
+            </div> 
+            <div class="form-group">
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Leave your review"></textarea>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="form-check-label" for="inlineRadio1"><i class="fa-regular fa-star"></i></label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2"><i class="fa-solid fa-star"></i></label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                <label class="form-check-label" for="inlineRadio3">3</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                <label class="form-check-label" for="inlineRadio3">4</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                <label class="form-check-label" for="inlineRadio3">5</label>
+            </div>
+            <br>
+            <button class="btn btn-outline-success-modify my-2 my-sm-0"  type="submit">Submit</button>
+        </form>
+    </div>
+    <hr>
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-3 mt-5">
+
+                <img class="review-img" src="{% static 'img/dd.jpg'%}" alt="card-img-top">
+            </div>
+            <div class="col md-9 mt-5">
+                <h3 class="p-3">User Name</h3>
+                <p class="p-3">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock . "</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        input[type=number]{
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+        
+        input[type=number]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+    </style>
+    <script>
+        function addtocart(){
+            document.getElementById('btmclose').click();
+            document.getElementById('formaddtocart').submit();
+        }
+    </script>
+{% endblock body %}
+    

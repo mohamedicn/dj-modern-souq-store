@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/about_me.css' %}">
+    <title>Document</title>
+</head>
+<style>
+    .a_detail {
+        background: #0c1fff;
+        color: wheat;
+        width: 100px;
+        padding: 10px;
+        /* text-align: center; */
+        /* align-items: center; */
+        display: flex;
+        justify-content: center;
+        font-size: 17px;
+        margin-top: 30px;
+        border-radius: 20px;
+    }
+</style>
+<body dir="rtl">
+    <div id="container">
+        <nav id="nav"></nav>
+        <main id="cart-orders-main">
+            <div id="sitbar">
+                <div id="person-name">
+                    <h2> اهلا زياد احمد </h2>
+                    <p>ziad0713@gmail.com</p>
+                </div>
+                <hr>
+                <a class="icon-sitbar" href="{% url 'accounts:profile' slug=user.profile.slug %}">
+                    <img src="{% static 'assets/icon/account-profile.svg' %}" alt="">
+                    <p>حساب</p>
+                </a>
+                <a class="icon-sitbar" href="{% url 'accounts:order' slug=user.profile.slug %}">
+                    <img src="{% static 'assets/icon/account-orders.svg' %}" alt="">
+                    <p>الطلبات</p>
+                </a>
+                <a class="icon-sitbar" href="{% url 'accounts:showproduct_favorites' slug=user.profile.slug %}">
+                    <img src="{% static 'assets/icon/account-wishlist-v2.svg' %}" alt="">
+                    <p>المفضله</p>
+                </a>
+                </a>
+                <hr>
+                <a id="login-out" href="/">
+                    <p> الصفحة الرئيسية </p>
+                </a>
+            </div>
+            <div id="theOrders">
+                <div id="page-name">
+                    <h1>الطلبات</h1>
+                    <p>عرض سجل الطلبات الخاص بيك وتحقق من حالة التسليم للمنتجات</p>
+                </div>
+                {% for order in sorted_orders  %}
+                    {% if order.status == 'تم الشحن' %}
+                        <div class="product-card">
+                            <div class="name-order">
+                                <h4>{{order.id}}</h4>
+                                <p>تم الطلب يوم  {{order.order_date}}</p>
+                                <a class="a_detail" href="{% url 'accounts:order_details' slug=user.profile.slug pk=order.id %}">تفاصيل الطلب</a>
+                            </div>
+                            <hr>
+                            <div class="text-product" style="    margin-right: auto;">
+                                <div class="shipping" id="done">{{order.status}}</div>
+                                <a class="navbar-brand" href="/"><img src="/static/assets/icon/amd2.svg" alt=""> logo</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="product-card">
+                            <div class="name-order">
+                                <h4>{{order.id}}</h4>
+                                <p>تم الطلب يوم  {{order.order_date}}</p>
+                                <a class="a_detail" href="{% url 'accounts:order_details' slug=user.profile.slug pk=order.id %}">تفاصيل الطلب</a>
+                            </div>
+                            <hr>
+                            <div class="text-product" style="    margin-right: auto;">
+                                <div class="shipping" id="load">{{order.status}}</div>
+                                <a class="navbar-brand" href="/"><img src="/static/assets/icon/amd2.svg" alt=""> logo</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </main>
+        <footer id="footer">
+
+        </footer>
+    </div>
+</body>
+
+</html>

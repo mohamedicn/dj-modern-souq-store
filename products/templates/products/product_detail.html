@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+    <main class="mt-5 pt-4">
+        <div class="container dark-grey-text mt-5">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">{{message}}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="row">
+                <div class="col-md-6 mb-5 project-imagee">
+                    {% if product_detail.PRDPriceDiscount > 0  %}
+                        <a href="" style="text-decoration: none ;position: absolute;transform:rotate(-35deg)">
+                            <span class="badge red">Price offer</span>
+                        </a>
+                    {% else %}
+                                    
+                    {% endif %}
+                    {% if product_detail.PRDIImage  %}
+                        <img src="{{product_detail.PRDIImage.url}}" class="card-img-top" alt="...">
+                    {% else %}
+                        <img src="{%static 'img/not_found_image.jpg'%}" class="card-img-top" alt="...">
+                    {% endif %} 
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="p-4 ml-5">
+                        <div class="mb-3">
+                        <a href="" style="text-decoration: none">
+                            <span class="badge purple mr-1">{{product_detail.PRDcategory}}</span>
+                        </a>
+                        
+                        {% if product_detail.PRDNew %}
+                            <a href="" style="text-decoration: none">
+                                <span class="badge blue mr-1">New</span>
+                            </a>
+                        {% endif %}
+                        {% if product_detail.PRDSeller %}
+                            <a href="" style="text-decoration: none">
+                                <span class="badge red mr-1">Bestseller</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                        
+                        <p class="lead">
+                            {% if product_detail.PRDPriceDiscount > 0  %}
+                                <span class="mr-1">
+                                    <del>{{product_detail.PRDPrice}} $</del>
+                                </span>
+                                <span>{{product_detail.PRDCost}}$</span>
+                            {% else %}
+                                <span>{{product_detail.PRDPrice}}$</span>
+                            {% endif %}
+                        </p>
+                        <h1 class="font-weight-bold">{{product_detail}}</h1>
+                        <p class="lead font-weight-bold">الوصف</p>
+                        <p>{{product_detail.PRDDesc}}</p>
+
+                        <form id="formaddtocart" class="d-flex justify-content-left" action="{% url 'orders:add_to_cart' %}">
+                        <button type="button" class="btn btn ml-2 btn-outline-success-modify btn-js my-2 my-sm-0" data-toggle="modal" data-target="#staticBackdrop">
+                            اضافه الي السلة <i class="fas fa-shopping-cart ml-1"></i>
+                        </button>
+                        <div class="modal fade" style="height:45%;margin: 0px auto;opacity:1;" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Add To Cart</h5>
+                                    <button type="button" style="border: none;font-size: 25px;" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col-12">
+                                            <div class="input-group">
+                                                <label class="label">Quantity : </label>
+                                                <input class="input--style-4" type="number" name="qty" value="1" >
+                                                <input type="hidden" name="product" value="{{product_detail.slug}}">
+                                                <input type="hidden" name="product_price" value="{{product_detail.PRDCost}}">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button class="btn ml-2 btn-outline-success-modify my-2 my-sm-0" onclick="addtocart()" type="submit">Add To Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'accounts:product_favorites' slug=product_detail.slug %}" class="btn ml-2 btn-outline-success-modify my-2 my-sm-0" type="favorite">
+                            <i class="fa-regular fa-heart" style="font-size: 20px;"></i>
+                        </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+        {% comment %} {% if product_accessories %}
+            <hr>
+            <h4 class="card-title text-center also-like">You may also like</h4>
+            <hr style="width: 10%;">
+            <div class="slideweqwe container">
+                <div class="row">
+                    {% for accessories in product_accessories %}
+                        {% for product in accessories.PACCAlternatives.all %}
+                            
+                            <div class="col-lg-3 col-md-6 col-sm-12 mt-3 active">
+                                <div class="card" style="width: 14rem; height:15.4rem;">
+                                    <div class="project-image" style="height: 60%;">
+                                        {% if product.PRDIImage  %}
+                                            <img src="{{product.PRDIImage.url}}" style="height: 100%;" class="card-img-top" alt="...">
+                                        {% else %}
+                                            <img src="{% static 'img/not_found_image.jpg' %}" style="height: 100%;" class="card-img-top" alt="...">
+                                        {% endif %}     
+                                    </div>
+                                    <div class="card-body" style="padding: 12px; padding-top: 2px;">
+                                        <h4 class="card-title text-center"><a href="{% url 'products:product_detail' product.slug %}" style="text-decoration:none">{{ product.PRDname|slice:":13" }}</a></h4>
+                                        <p class="card-text text-center" style="margin-bottom: 4px;">
+                                            {% if product.PRDPriceDiscount > 0  %}
+                                                <span class="span1" class="mr-1">
+                                                    <del>{{product.PRDPrice}} $</del>
+                                                </span>
+                                                <span class="span1">{{product.PRDCost}}$</span>
+                                            {% else %}
+                                                <span class="span1">{{product.PRDPrice}}$</span>
+                                            {% endif %}
+                                        </p>
+                                        <p>
+                                            {% if product.PRDPriceDiscount > 0  %}
+                                                <a href="" style="text-decoration: none ;">
+                                                    <span class="badge red mr-1 ">Price offer</span>
+                                                </a>
+                                            {% else %}
+                                                        
+                                            {% endif %}
+                                            {% if product.PRDNew %}
+                                                <a href="" style="text-decoration: none ;">
+                                                <span class="badge badge-pill badge blue mr-1">NEW</span>
+                                                </a>
+                                            {% endif %}
+                                            {% if product.PRDSeller %}
+                                                <a href="" style="text-decoration: none">
+                                                    <span class="badge red badge-pill">Bestseller</span>
+                                                </a>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %} {% endcomment %}
+    <hr class="mt-5">
+    <div class="container mt-5 mb-5">
+        <div class="row  d-flex justify-content-center">
+            <div class="col-md-5">
+                <div class="commentsview p-3 comment-co">
+                    {% comment %} {% for comment in comments %}
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="user d-flex flex-row align-items-center">
+                            <img src="{{comment.user.profile.image.url}}" width="50" class="user-img rounded-circle mr-2">
+                            <span><small class="font-weight-bold text-primary">@{{comment.user}}</small> <small class="font-weight-bold" style="display: block;">{{comment.comment}}</small></span>
+                            </div>
+                            <small>{{comment.created_on}}
+                                {% if comment.user == request.user %}
+                                    <a href="{% url 'product:delete_comment' comment_id=comment.id %}" 
+                                    class="delcomment"><i class="fas fa-trash ml-2" style="color: red;"></i></a>
+                                {% endif %}
+                            </small>
+                            </div>
+                            <div class="action d-flex justify-content-between mt-2 align-items-center">
+                                <div class="reply px-4">
+                                </div>
+                                <div class="icons align-items-center">
+                                    <a href="{% url 'product:is_dislike' comment_id=comment.id %}"
+                                        style="text-decoration: none;">
+                                        <i class="fa-regular fa-thumbs-down mr-1">
+                                        </i>
+                                    </a>
+                                    <span class="ml-1">{{ comment.dislikes.all.count }}</span>
+                                    <a href="{% url 'product:is_like' comment_id=comment.id %}" style="text-decoration: none;">
+                                        <i class="fa-regular fa-thumbs-up">
+                                        </i>
+                                    </a>
+                                    <span class="ml-1">{{ comment.likes.all.count }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr width="70%">
+                    {% endfor %} {% endcomment %}
+                    {% comment %} <div class="container mb-1">
+                        <form method="POST" action="{% url 'product:add_comment' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="hidden" name="user" value="{{user.pk}}">
+                                <input type="hidden" name="product" value="{{product_detail.slug}}">
+                                <textarea class="form-control" name="new_comment" id="exampleFormControlTextarea1" rows="3" placeholder="Leave your review"></textarea>
+                            </div>
+                            <br>
+                            <button class="btn btn-outline-success-modify my-2 my-sm-0" name="addcomment" type="submit">Submit</button>
+                        </form>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        input[type=number]{
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+        
+        input[type=number]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+    </style>
+    <script>
+        function addtocart(){
+            document.getElementById('btmclose').click();
+            document.getElementById('formaddtocart').submit();
+        }
+    </script>
+{% endblock body %}
+    

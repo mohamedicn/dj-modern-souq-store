@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block branding %}
+    <title>souq</title> 
+    <h1 id="head">SOUQ Administration</h1>
+    <span class="brand-text font-weight-light">SOUQ Administration</span>
+    <style>
+        .select2-container{
+            width:500px;
+            
+        }
+        .container-fluid{
+            background-color: black;
+        }
+    </style>
+{% endblock branding %}
+    
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock extrastyle %}
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .select2-container--default{
+        width:500px;
+    }
+    .select2-selection--multiple,
+    .select2-results,.select2-dropdown--below{
+        width: 500px;
+    }
+    .select2-selection--single{
+        width: 200px;
+    }
+    .select2-search ,.select2-search--dropdown
+    ,.select2-dropdown ,.select2-dropdown--below{
+        width: 500px;
+    }
+    .select2-container{
+        width: 600px;
+    }
+</style>
+{% endblock %}
